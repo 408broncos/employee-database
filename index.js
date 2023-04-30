@@ -1,8 +1,8 @@
-const js = require('./js/server.js');
-const homePage = require('./lib/user-prompt.js');
+const connection = require('./js/server.js');
 
-js.connect(err => {
+connection.connect(err => {
     if (err) throw err;
 })
 
+const homePage = require('./lib/user-prompt.js');
 homePage();

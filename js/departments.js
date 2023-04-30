@@ -2,12 +2,11 @@ const js = require('./server.js');
 
 const departmentQuery = `SELECT * FROM departments`;
 
-  const insertDepartment = (({ departmentName}) => {
-    const sql = `INSERT INTO departments (name) VALUES (?)`;
-    const params = departmentName;
-    js.query(sql, params, (err, res) => {});
-
-});
+const insertDepartment = ({ departmentName }) => {
+  const sql = `INSERT INTO departments (name) VALUES (?)`;
+  const params = [departmentName];
+  js.query(sql, params, (err, res) => {});
+};
 
 const departmentPrompt = [
   {

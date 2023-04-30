@@ -6,16 +6,26 @@ const roleQuery = `SELECT roles.id, roles.title, roles.salary, departments.name 
   const insertRole = ({ roleName, salary, department }) => {
     const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, (SELECT id FROM departments WHERE name = ?))`;
     const parameters = [roleName, salary, department];
-    js.query(sql, parameters);
+    js.query(sql, parameters, (err, res) => {
+        if (err) {
+            console.log(err);
+        }
+    });
   };
 
-const departmentQuery = {
-  selectAll: `SELECT * FROM departments`,
-  insert: ({ departmentName }) => {
-    const sql = `INSERT INTO departments (name) VALUES (?)`;
-    const parameters = departmentName;
-    js.query(sql, parameters);
-  }
+const departmentQuery = `SELECT * FROM departments`;
+
+const department = {
+    selectAll: `SELECT * FROM departments`,
+    insert: ({ departmentName }) => {
+        const sql = `INSERT INTO departments (name) VALUES (?)`;
+        const parameters = [departmentName];
+        js.query(sql, parameters, (err, res) => {
+            if (err) {
+                console.log(err);
+            }
+        });
+    }
 };
 
 const rolePrompt = [
@@ -41,5 +51,6 @@ module.exports = {
   roleQuery,
   departmentQuery,
   rolePrompt,
-  insertRole
+  insertRole,
+  department
 };
