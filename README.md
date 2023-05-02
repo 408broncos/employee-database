@@ -4,22 +4,21 @@
 
 | Technology Used         | Resource URL           | 
 | ------------- |:-------------:| 
-| Node.js    | [https://www.w3schools.com/nodejs/nodejs_filesystem.asp](https://www.w3schools.com/nodejs/nodejs_filesystem.asp)  
-| Express    | [https://expressjs.com/en/guide/routing.html](https://expressjs.com/en/guide/routing.html) 
-| Express    | [https://stackoverflow.com/questions/11321635/nodejs-express-what-is-app-use](https://stackoverflow.com/questions/11321635/nodejs-express-what-is-app-use) 
+| MySQL    | [https://www.w3schools.com/MySQL/mysql_create_db.asp](https://www.w3schools.com/MySQL/mysql_create_db.asp)  
+| MySQL    | [https://www.w3schools.com/MySQL/mysql_notnull.asp](https://www.w3schools.com/MySQL/mysql_notnull.asp) 
+| Node.js    | [https://www.w3schools.com/nodejs/nodejs_mysql.asp](https://www.w3schools.com/nodejs/nodejs_mysql.asp) 
+| MySQL    | [https://www.sitepoint.com/using-node-mysql-javascript-client/](https://www.sitepoint.com/using-node-mysql-javascript-client/) 
+
 
 
 
 ## Description 
 
-[Visit the Deployed Site](https://cryptic-inlet-51137.herokuapp.com/)
-
-For this project I was given a task to create a note taking generator. For this ask it was a little bit more simple than my previous assignments but a lot more steps to even get the application started. In this assignment we were given starter codes to help us get started, this included: an index.js, index and note htmls, json packages and a CSS file. Our task was to use what we were given and create a deployed note taking generator that gives the user the ability to add a title to their notes and a save and add button to store their notes and create new ones.
+For this project I was given a task to create an employee tracking database. In this assignment we were primarily focusing on the usage of mysql. In my project I needed to create a database that would keep track of all departments, role and employees for an imaginary company. At the end of the assignment the user needs to view all tables created for every department, roles, and employees and additionally the user must be able to add a department, add a role and add an employee.
 
 ## Markdown
 
 
-![Untitled_ Apr 27, 2023 9_27 PM](https://user-images.githubusercontent.com/126821868/235054278-273dbc9e-7c23-4c0b-ad0c-1890e7490ce4.gif)
 
 
 
@@ -29,68 +28,35 @@ Here I will be showing an example of a section I was stuck on but eventually dis
 
 
 ```js
-router.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '../assets/notes.html'));
-  });
-  
-  router.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../assets/index.html'));
-  });
-
-function createDb() {
-  fs.writeFile('./db/db.json', JSON.stringify(notes, null, 2), err => {
-    if (err) throw err;
-  });
-}
+const employeeQueryManager = `
+    SELECT a.id, a.first_name, a.last_name, roles.title AS role, departments.name AS department, roles.salary AS salary, CONCAT_WS(' ', b.first_name, b.last_name) AS manager
+    FROM employees a
+    LEFT JOIN employees b ON a.manager_id = b.id
+    LEFT JOIN roles ON a.role_id = roles.id
+    LEFT JOIN departments ON roles.department_id = departments.id
+    ORDER BY manager
+  `;
+const employeeQueryDepartment = `
+    SELECT a.id, a.first_name, a.last_name, roles.title AS role, departments.name AS department, roles.salary AS salary, CONCAT_WS(' ', b.first_name, b.last_name) AS manager
+    FROM employees a
+    LEFT JOIN employees b ON a.manager_id = b.id
+    LEFT JOIN roles ON a.role_id = roles.id
+    LEFT JOIN departments ON roles.department_id = departments.id
+    ORDER BY department
+  `;
 ```
 
-```html
-  <link rel="stylesheet" href="/css/styles.css" />
-  </head>
-
-  <body>
-    <nav class="navbar bg-info">
-      <a class="navbar-brand text-light p-3" href="/notes">Note Taker </a>
-      <div class="icons">
-        <i class="fas fa-save text-light save-note"></i>
-        <i class="fas fa-plus text-light new-note"></i>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-4 list-container">
-          <div class="card">
-            <ul class="list-group"></ul>
-          </div>
-        </div>
-        <div class="col-8">
-          <input
-            class="note-title"
-            placeholder="Note Title"
-            maxlength="28"
-            type="text"
-          />
-          <textarea class="note-textarea" placeholder="Note Text"></textarea>
-        </div>
-      </div>
-    </div>
-    <script src="/js/index.js"></script>
-  </body>
-</html>
-
-```
-
-In these code snippets I struggled a lot with deploying the notes.html file with correct CSS styling done to it. I spent a long time trying to figure out what the problem was and how to solve it, I finally realized that my script sources were linked incorrectly and also discovered that I was not inputting the required coding structure for the server to request the html files. After correcting and debugging my code I was able to get my notes.html file to correct deploy the page with its original CSS styling done to it.
+I think I spent the most time with this code snippet than anything else for this assignment. At first I had one const variable to route all manager and department options but I soon found out that creating one variable with 2 different routes was a huge problem. I found out that after creating 2 seperate variables and with they're own intended roles the execution moved a lot more smoothly and I was able to locate both departments and managers in my terminal.
 
 
 ## Usage 
 
-For usages I used a lot of the activities we worked on in class and a whole lot of research with ways to problem solve road blocks that I ran into.
+For usages I used a lot of the activities we worked on in class and a whole lot of research with ways to problem solve road blocks that I ran into. Also another usage I found extremely helpful was stackoverflow, that website has a lot of helpful tools and questions that other people struggled with as well and the answers that are given are very well detailed in problem solving.
 
 
 ## Learning Points 
 
-This assignment for me was also a little challenging since working with Node.js is still something I need to work. However, after researching and discovering the answers to my problems, I was able to really understand where and how to fix my code especially being able to understand Node.js a lot more.
+This assignment for me was also a little challenging, mysql is a lot different than working with node.js so transitioning from node to mysql was a little confusing at first but after rial and errors it's starting to feel more comfortable.
 
 ## Author Info
 
