@@ -21,6 +21,10 @@ For this project I was given a task to create an employee tracking database. In 
 
 
 
+https://user-images.githubusercontent.com/126821868/235569287-d129b733-e39e-48fc-8a87-5b1349440130.mp4
+
+
+
 
 ## Code Examples
 
